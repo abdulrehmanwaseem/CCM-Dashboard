@@ -19,9 +19,8 @@ export default function AuthLayout({
               <img
                 width={231}
                 height={48}
-                src="/images/logo/logo-truer.svg"
+                src="/images/logo/logo-dark.svg"
                 alt="Logo"
-                className="bg-white py-2 pl-2 rounded-2xl"
               />
               <p className="text-center text-gray-400 dark:text-white/60">
                 Free and Open-Source Tailwind CSS Admin Dashboard Template

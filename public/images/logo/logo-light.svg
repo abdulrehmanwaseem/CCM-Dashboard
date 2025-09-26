@@ -12,7 +12,7 @@
   </g>
   
   <!-- Larger Text -->
-  <text x="75" y="42" font-family="Inter, sans-serif" font-size="36" fill="#ffffff" font-weight="600">
+  <text x="75" y="42" font-family="Inter, sans-serif" font-size="36" fill="#101828" font-weight="600">
     CCM Dashboard
   </text>
 </svg>
