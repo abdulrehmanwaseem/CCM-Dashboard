@@ -6,10 +6,10 @@ const sampleRecords = [
   {
     patient_id: "P-1001",
     patient_name: "Sarah Chen",
-    cpt_code: "99490",
+    cpt_code: "97110", // Therapeutic Exercises
     previous_minutes_counted: 10,
     total_minutes_counted: 18,
-    total_amount_billed: "$120.00",
+    total_amount_billed: "$135.00",
     provider_id: "PR-21",
     visit_note_id: "VN-4321",
     message_id: "MSG-9001",
@@ -34,10 +34,10 @@ const sampleRecords = [
   {
     patient_id: "P-1002",
     patient_name: "Michael Rodriguez",
-    cpt_code: "99490",
+    cpt_code: "97112", // Neuromuscular Reeducation
     previous_minutes_counted: 0,
     total_minutes_counted: 12,
-    total_amount_billed: "$80.00",
+    total_amount_billed: "$90.00",
     provider_id: "PR-11",
     visit_note_id: "VN-4322",
     message_id: "MSG-9002",
@@ -60,7 +60,7 @@ const sampleRecords = [
   {
     patient_id: "P-1003",
     patient_name: "Emma Thompson",
-    cpt_code: "99487",
+    cpt_code: "99396", // Physical Checkup
     previous_minutes_counted: 5,
     total_minutes_counted: 25,
     total_amount_billed: "$200.00",
@@ -86,7 +86,7 @@ const sampleRecords = [
   {
     patient_id: "P-1004",
     patient_name: "James Wilson",
-    cpt_code: "99490",
+    cpt_code: "99397", // Preventive Exam for Patient over 65
     previous_minutes_counted: 0,
     total_minutes_counted: 8,
     total_amount_billed: "$0.00",
@@ -112,7 +112,7 @@ const sampleRecords = [
   {
     patient_id: "P-1005",
     patient_name: "James Wilson",
-    cpt_code: "99490",
+    cpt_code: "99386", // Preventive Exam for New Adult Patient
     previous_minutes_counted: 0,
     total_minutes_counted: 8,
     total_amount_billed: "$0.00",
@@ -205,25 +205,25 @@ export default function CCMRecords() {
                 </span>
               </div>
               <div className="text-theme-sm text-gray-500 mt-1">
-                <span className="font-medium text-gray-800 dark:text-white/90">
-                  {r.patient_name}
-                </span>
-                <span className="text-gray-500 text-theme-xs mx-2">-</span>
-                <span className="text-theme-xs text-gray-600">
-                  CPT: {r.cpt_code}
-                </span>
-                <span className="text-gray-500 text-theme-xs mx-2">·</span>
-                <span className="text-theme-xs text-gray-600">
-                  Prev: {r.previous_minutes_counted} min
-                </span>
-                <span className="text-gray-500 text-theme-xs mx-2">·</span>
-                <span className="text-theme-xs text-gray-600">
-                  Total: {r.total_minutes_counted} min
-                </span>
-                <span className="text-gray-500 text-theme-xs mx-2">·</span>
-                <span className="text-theme-xs text-gray-600">
-                  Billed: {r.total_amount_billed}
-                </span>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="font-medium text-gray-800 dark:text-white/90">
+                    {r.patient_name}
+                  </span>
+
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-700 dark:bg-white/[0.04] dark:text-gray-200">
+                      CPT: {r.cpt_code}
+                    </span>
+
+                    <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs text-gray-700 dark:bg-white/[0.04] dark:text-gray-200">
+                      Prev: {r.previous_minutes_counted} min
+                    </span>
+
+                    <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs text-gray-700 dark:bg-white/[0.04] dark:text-gray-200">
+                      Total: {r.total_minutes_counted} min
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </li>
@@ -265,10 +265,20 @@ export default function CCMRecords() {
                         {r.content}
                       </div>
                       <div className="mt-2 text-theme-xs text-gray-500">
-                        CPT: {r.cpt_code} · Previous minutes:{" "}
-                        {r.previous_minutes_counted} min · Total minutes:{" "}
-                        {r.total_minutes_counted} min · Amount billed:{" "}
-                        {r.total_amount_billed}
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs text-gray-700 dark:bg-white/[0.04] dark:text-gray-200">
+                            CPT: {r.cpt_code}
+                          </span>
+                          <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs text-gray-700 dark:bg-white/[0.04] dark:text-gray-200">
+                            Previous: {r.previous_minutes_counted} min
+                          </span>
+                          <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs text-gray-700 dark:bg-white/[0.04] dark:text-gray-200">
+                            Total: {r.total_minutes_counted} min
+                          </span>
+                          <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs text-gray-700 dark:bg-white/[0.04] dark:text-gray-200">
+                            Amount billed: {r.total_amount_billed}
+                          </span>
+                        </div>
                       </div>
                     </div>
                     <div className="text-theme-xs text-gray-400 text-right">
