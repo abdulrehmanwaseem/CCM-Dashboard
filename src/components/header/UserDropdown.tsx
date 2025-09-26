@@ -3,16 +3,16 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { setUnAuthenticated } from "../../redux/slice/auth";
 import { Dropdown } from "../ui/dropdown/Dropdown";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
 
 export default function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false);
-  const [userData, setUserData] = useState({
-    email: "admin@gmail.com",
-    avatar: "https://api.dicebear.com/9.x/lorelei/svg",
-    full_name: "Admin User",
-  });
+  const dispatch = useDispatch();
+  const { userData } = useSelector((state: RootState) => state.auth);
 
   function toggleDropdown() {
     setIsOpen(!isOpen);
@@ -24,6 +24,8 @@ export default function UserDropdown() {
 
   const signOutHandler = async () => {
     localStorage.setItem("isAuthenticated", "false");
+    localStorage.removeItem("userData");
+    dispatch(setUnAuthenticated());
     toast.success("Successfully logged out");
   };
 

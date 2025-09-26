@@ -41,9 +41,21 @@ export default function SignInForm() {
 
   const onSubmit = (data: FormData) => {
     console.log(data);
-    localStorage.setItem("isAuthenticated", "true");
-    dispatch(setAuthenticated());
-    navigate("/");
+    if (data.email === "admin@gmail.com" && data.password === "admin#123") {
+      const userData = {
+        email: data.email,
+        full_name: "Admin User",
+        avatar: "https://api.dicebear.com/9.x/lorelei/svg",
+      };
+      localStorage.setItem("isAuthenticated", "true");
+      localStorage.setItem("userData", JSON.stringify(userData));
+      dispatch(setAuthenticated(userData));
+      navigate("/");
+    } else {
+      toast.error(
+        "Invalid credentials. Please use 'admin@gmail.com' and 'admin#123'"
+      );
+    }
   };
 
   const handleGoogleOAuth = () => {
@@ -135,7 +147,6 @@ export default function SignInForm() {
                     <Input
                       {...register("email")}
                       placeholder="info@gmail.com"
-                      type="email"
                     />
                     {errors.email && (
                       <p className="text-sm text-red-500 mt-1">

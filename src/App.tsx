@@ -33,7 +33,12 @@ export default function App() {
 
   useEffect(() => {
     if (auth === "true") {
-      dispatch(setAuthenticated());
+      const userData = localStorage.getItem("userData");
+      if (userData) {
+        dispatch(setAuthenticated(JSON.parse(userData)));
+      } else {
+        dispatch(setAuthenticated(null));
+      }
     } else {
       dispatch(setUnAuthenticated());
     }
