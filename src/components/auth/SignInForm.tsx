@@ -23,7 +23,10 @@ const schema = yup.object({
     .required("Password is required"),
 });
 
-type FormData = yup.InferType<typeof schema>;
+type FormData = {
+  email: string;
+  password: string;
+};
 
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);

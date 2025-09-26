@@ -3,8 +3,12 @@ import PageBreadcrumb from "../components/common/PageBreadCrumb";
 import PageMeta from "../components/common/PageMeta";
 import UserInfoCard from "../components/UserProfile/UserInfoCard";
 import UserMetaCard from "../components/UserProfile/UserMetaCard";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 export default function UserProfiles() {
+  const { userData: authUser } = useSelector((state: RootState) => state.auth);
+
   const [userData, setUserData] = useState({
     email: "",
     avatar: "",
@@ -20,31 +24,15 @@ export default function UserProfiles() {
   });
 
   useEffect(() => {
-    try {
-      const authData = localStorage.getItem(
-        "sb-uiraboudhblnffuyanny-auth-token"
-      );
-      if (authData) {
-        const parsed = JSON.parse(authData);
-        const meta = parsed?.user?.user_metadata || {};
-        setUserData({
-          email: parsed?.user?.email || "",
-          avatar: meta?.avatar_url || "/images/user/owner.jpg",
-          full_name: meta?.full_name || "",
-          firstName: meta?.firstName || "",
-          lastName: meta?.lastName || "",
-          phone: meta?.phone || "",
-          bio: meta?.bio || "",
-          country: meta?.country || "",
-          city: meta?.city || "",
-          postalCode: meta?.postalCode || "",
-          taxId: meta?.taxId || "",
-        });
-      }
-    } catch (error) {
-      console.error("Error parsing Supabase auth token:", error);
+    if (authUser) {
+      setUserData((prev) => ({
+        ...prev,
+        email: authUser.email || "",
+        avatar: authUser.avatar || "",
+        full_name: authUser.full_name || "",
+      }));
     }
-  }, []);
+  }, [authUser]);
 
   return (
     <>

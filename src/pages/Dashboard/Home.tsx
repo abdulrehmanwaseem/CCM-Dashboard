@@ -1,14 +1,12 @@
 // @ts-nocheck
 
-import { useGetBillingSummaryQuery } from "@/redux/apis/billingApi";
-import PageMeta from "../../components/common/PageMeta";
-import Metrics from "@/components/metrices/Metrics";
+import CCMRecords from "@/components/ccm/CCMRecords";
+import PageMeta from "@/components/common/PageMeta";
+import CSVRecords from "@/components/metrices/CSVRecords";
 import MonthlyTarget from "@/components/metrices/MonthlyTarget";
-import RecentOrders from "@/components/metrices/RecentOrders";
+import StatisticsChart from "@/components/metrices/StatisticsChart";
 
 export default function Home() {
-  const { data } = useGetBillingSummaryQuery({});
-
   return (
     <>
       <PageMeta
@@ -16,19 +14,19 @@ export default function Home() {
         description="This is React.js Ecommerce Dashboard page for TailAdmin - React.js Tailwind CSS Admin Dashboard Template"
       />
       <div className="grid grid-cols-12 gap-4 md:gap-6">
-        <div className="col-span-12 space-y-6 xl:col-span-7">
-          <Metrics data={data} />
-        </div>
-
         <div className="col-span-12 xl:col-span-5">
-          <ComingSoonOverlay title="Monthly Target">
-            <MonthlyTarget />
-          </ComingSoonOverlay>
+          <MonthlyTarget />
+        </div>
+        <div className="col-span-12 space-y-6 xl:col-span-7">
+          <CCMRecords />
         </div>
 
         <div className="col-span-12">
-          <ComingSoonOverlay title="Recent Orders">
-            <RecentOrders />
+          <CSVRecords />
+        </div>
+        <div className="col-span-12">
+          <ComingSoonOverlay title="Patient Statistics Overview">
+            <StatisticsChart />
           </ComingSoonOverlay>
         </div>
       </div>
