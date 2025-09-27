@@ -1,5 +1,3 @@
-import React from "react";
-
 interface Props {
   searchTerm: string;
   setSearchTerm: (s: string) => void;

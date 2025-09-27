@@ -195,9 +195,26 @@ export default function CCMRecords() {
                   {r.content}
                 </button>
                 <div className="flex items-center gap-2">
-                  <span className="text-theme-xs text-gray-400">
-                    {formatDistanceToNow(r.timestamp, { addSuffix: true })}
-                  </span>
+                  <div className="text-right">
+                    <div className="text-theme-xs text-gray-400">
+                      {formatDistanceToNow(r.timestamp, { addSuffix: true })}
+                    </div>
+                    {/* revenue / billed amount */}
+                    <div
+                      className={`text-sm font-semibold ${
+                        (r.total_amount_billed || "").replace(
+                          /[^0-9.-]+/g,
+                          ""
+                        ) *
+                          1 >
+                        0
+                          ? "text-green-700"
+                          : "text-gray-500"
+                      }`}
+                    >
+                      {r.total_amount_billed || "$0.00"}
+                    </div>
+                  </div>
                   <button
                     onClick={() =>
                       dispatch(
@@ -211,7 +228,7 @@ export default function CCMRecords() {
                       )
                     }
                     title="View patient details"
-                    className="inline-flex items-center justify-center h-8 w-8 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300"
+                    className="inline-flex items-center justify-center h-9 w-9 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300"
                   >
                     <svg
                       width="16"
