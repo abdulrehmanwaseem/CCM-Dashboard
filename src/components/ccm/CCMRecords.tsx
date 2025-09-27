@@ -11,14 +11,14 @@ const sampleRecords = [
     patient_name: "Sarah Chen",
     cpt_code: "97110", // Therapeutic Exercises
     previous_minutes_counted: 10,
-    total_minutes_counted: 18,
-    total_amount_billed: "$135.00",
+    total_minutes_counted: 28,
+    total_amount_billed: "$210.00",
     provider_id: "PR-21",
     visit_note_id: "VN-4321",
     message_id: "MSG-9001",
     order_id: "ORD-778",
     ccm_report_id: "CCM-3001",
-    timestamp: new Date(Date.now() - 1000 * 60 * 2),
+    timestamp: new Date(Date.now() - 1000 * 60 * 2), // 2 minutes ago
     date_range: "2025-09-01 - 2025-09-26",
     content:
       "PHQ-9 report generated: patient screening indicates mild symptoms.",
@@ -26,9 +26,9 @@ const sampleRecords = [
     category: "Care Coordination",
     duplicates_detected: 0,
     missing_minutes_flag: false,
-    total_minutes: 18,
-    billable_minutes: 15,
-    non_billable_minutes: 3,
+    total_minutes: 28,
+    billable_minutes: 21,
+    non_billable_minutes: 7,
     billing_status: "pending",
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
@@ -46,7 +46,7 @@ const sampleRecords = [
     message_id: "MSG-9002",
     order_id: "ORD-779",
     ccm_report_id: "CCM-3002",
-    timestamp: new Date(Date.now() - 1000 * 60 * 15),
+    timestamp: new Date(Date.now() - 1000 * 60 * 15), // 15 minutes ago
     date_range: "2025-09-01 - 2025-09-26",
     content: "New patient registered and intake completed.",
     minutes_documented: 12,
@@ -60,6 +60,7 @@ const sampleRecords = [
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   },
+
   {
     patient_id: "P-1003",
     patient_name: "Emma Thompson",
@@ -72,7 +73,7 @@ const sampleRecords = [
     message_id: "MSG-9003",
     order_id: "ORD-780",
     ccm_report_id: "CCM-3003",
-    timestamp: new Date(Date.now() - 1000 * 60 * 60),
+    timestamp: new Date(Date.now() - 1000 * 60 * 60), // 1 hour ago
     date_range: "2025-09-01 - 2025-09-26",
     content: "Appointment completed and summary added.",
     minutes_documented: 25,
@@ -86,6 +87,7 @@ const sampleRecords = [
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   },
+
   {
     patient_id: "P-1004",
     patient_name: "James Wilson",
@@ -98,7 +100,7 @@ const sampleRecords = [
     message_id: "MSG-9004",
     order_id: "ORD-781",
     ccm_report_id: "CCM-3004",
-    timestamp: new Date(Date.now() - 1000 * 60 * 120),
+    timestamp: new Date(Date.now() - 1000 * 60 * 120), // 2 hours ago
     date_range: "2025-09-01 - 2025-09-26",
     content: "Care plan updated and follow up scheduled.",
     minutes_documented: 8,
@@ -112,29 +114,30 @@ const sampleRecords = [
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   },
+
   {
     patient_id: "P-1005",
-    patient_name: "James Wilson",
+    patient_name: "Sophia Davis",
     cpt_code: "99386", // Preventive Exam for New Adult Patient
-    previous_minutes_counted: 0,
-    total_minutes_counted: 8,
-    total_amount_billed: "$0.00",
-    provider_id: "PR-05",
-    visit_note_id: "VN-4324",
-    message_id: "MSG-9004",
-    order_id: "ORD-781",
+    previous_minutes_counted: 2,
+    total_minutes_counted: 18,
+    total_amount_billed: "$135.00",
+    provider_id: "PR-14",
+    visit_note_id: "VN-4325",
+    message_id: "MSG-9005",
+    order_id: "ORD-782",
     ccm_report_id: "CCM-3005",
-    timestamp: new Date(Date.now() - 1000 * 60 * 120),
+    timestamp: new Date(Date.now() - 1000 * 60 * 240), // 4 hours ago
     date_range: "2025-09-01 - 2025-09-26",
-    content: "Care plan updated and follow up scheduled.",
-    minutes_documented: 8,
+    content: "Initial preventive exam and care plan discussion.",
+    minutes_documented: 18,
     category: "Care Coordination",
     duplicates_detected: 0,
-    missing_minutes_flag: true,
-    total_minutes: 8,
-    billable_minutes: 0,
-    non_billable_minutes: 8,
-    billing_status: "flagged",
+    missing_minutes_flag: false,
+    total_minutes: 18,
+    billable_minutes: 15,
+    non_billable_minutes: 3,
+    billing_status: "pending",
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   },
@@ -196,9 +199,6 @@ export default function CCMRecords() {
                 </button>
                 <div className="flex items-center gap-2">
                   <div className="text-right">
-                    <div className="text-theme-xs text-gray-400">
-                      {formatDistanceToNow(r.timestamp, { addSuffix: true })}
-                    </div>
                     {/* revenue / billed amount */}
                     <div
                       className={`text-sm font-semibold ${
@@ -213,6 +213,9 @@ export default function CCMRecords() {
                       }`}
                     >
                       {r.total_amount_billed || "$0.00"}
+                    </div>
+                    <div className="text-theme-xs text-gray-400">
+                      {formatDistanceToNow(r.timestamp, { addSuffix: true })}
                     </div>
                   </div>
                   <button
