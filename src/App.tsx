@@ -7,8 +7,7 @@ import { ScrollToTop } from "./components/common/ScrollToTop";
 import AppLayout from "./layout/AppLayout";
 import SignIn from "./pages/AuthPages/SignIn";
 import SignUp from "./pages/AuthPages/SignUp";
-import BillingRecords from "./pages/Billing";
-import BillingRecordSearch from "./pages/Billing/search/BillingRecordSearch";
+import PatientRecords from "./pages/Patients";
 import Blank from "./pages/Blank";
 import Calendar from "./pages/Calendar";
 import BarChart from "./pages/Charts/BarChart";
@@ -23,6 +22,7 @@ import Buttons from "./pages/UiElements/Buttons";
 import Images from "./pages/UiElements/Images";
 import Videos from "./pages/UiElements/Videos";
 import UserProfiles from "./pages/UserProfiles";
+import ViewCSV from "./pages/CSVRecords/ViewCSV";
 import { setAuthenticated, setUnAuthenticated } from "./redux/slice/auth";
 
 export default function App() {
@@ -84,8 +84,8 @@ export default function App() {
             {/* Others Page */}
             <Route path="/profile" element={<UserProfiles />} />
             <Route path="/calendar" element={<Calendar />} />
-            <Route path="/billing" element={<BillingRecords />} />
-            <Route path="/billing/search" element={<BillingRecordSearch />} />
+            <Route path="/patients" element={<PatientRecords />} />
+            <Route path="/csv/view" element={<ViewCSV />} />
 
             <Route path="/blank" element={<Blank />} />
 

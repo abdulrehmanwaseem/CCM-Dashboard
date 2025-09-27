@@ -30,9 +30,9 @@ const navItems: NavItem[] = [
     path: "/",
   },
   {
-    name: "Billing Records",
+    name: "Patients",
     icon: <TableIcon />,
-    path: "/billing",
+    path: "/patients",
   },
   {
     icon: <CalenderIcon />,

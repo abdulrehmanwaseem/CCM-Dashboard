@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface UserData {

@@ -17,7 +17,7 @@ export default function Home() {
         <div className="col-span-12 xl:col-span-5">
           <MonthlyTarget />
         </div>
-        <div className="col-span-12 space-y-6 xl:col-span-7">
+        <div className="col-span-12   space-y-6 xl:col-span-7">
           <CCMRecords />
         </div>
 

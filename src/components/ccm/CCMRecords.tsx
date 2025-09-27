@@ -1,6 +1,9 @@
 // @ts-nocheck
-import { useState } from "react";
 import { formatDistanceToNow } from "date-fns";
+import { useDispatch } from "react-redux";
+import { openModal } from "@/redux/slice/modal";
+import type { AppDispatch } from "@/redux/store";
+import { useNavigate } from "react-router";
 
 const sampleRecords = [
   {
@@ -138,18 +141,9 @@ const sampleRecords = [
 ];
 
 export default function CCMRecords() {
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const preview = sampleRecords.slice(0, 5);
-
-  function openModal(index = 0) {
-    setActiveIndex(index);
-    setModalOpen(true);
-  }
-
-  function closeModal() {
-    setModalOpen(false);
-  }
+  const preview = sampleRecords.slice(0, 4);
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
 
   return (
     <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 p-6">
@@ -164,7 +158,7 @@ export default function CCMRecords() {
         </div>
         <div>
           <button
-            onClick={() => openModal(0)}
+            onClick={() => navigate("/patients")}
             className="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-white/5 dark:text-white/90"
           >
             Show all
@@ -200,11 +194,53 @@ export default function CCMRecords() {
                 >
                   {r.content}
                 </button>
-                <span className="text-theme-xs text-gray-400">
-                  {formatDistanceToNow(r.timestamp, { addSuffix: true })}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="text-theme-xs text-gray-400">
+                    {formatDistanceToNow(r.timestamp, { addSuffix: true })}
+                  </span>
+                  <button
+                    onClick={() =>
+                      dispatch(
+                        openModal({
+                          modalType: "patientDetails",
+                          edit: false,
+                          callback: null,
+                          data: r,
+                          MODAL_WIDTH: "max-w-[500px]",
+                        })
+                      )
+                    }
+                    title="View patient details"
+                    className="inline-flex items-center justify-center h-8 w-8 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300"
+                  >
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"
+                        stroke="currentColor"
+                        strokeWidth="1.2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <circle
+                        cx="12"
+                        cy="12"
+                        r="3"
+                        stroke="currentColor"
+                        strokeWidth="1.2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
               </div>
-              <div className="text-theme-sm text-gray-500 mt-1">
+              <div className="text-theme-sm text-gray-500 mt-1 mb-1">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="font-medium text-gray-800 dark:text-white/90">
                     {r.patient_name}
@@ -229,75 +265,6 @@ export default function CCMRecords() {
           </li>
         ))}
       </ul>
-
-      {/* Modal */}
-      {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div
-            className="absolute inset-0 bg-black/40"
-            onClick={closeModal}
-          ></div>
-          <div className="relative z-10 w-full max-w-2xl bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-6">
-            <div className="flex items-start justify-between mb-4">
-              <h4 className="text-lg font-semibold text-gray-800 dark:text-white/90">
-                All CCM Records
-              </h4>
-              <button
-                onClick={closeModal}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                Close
-              </button>
-            </div>
-
-            <div className="divide-y divide-gray-100 dark:divide-gray-800">
-              {sampleRecords.map((r) => (
-                <div key={r.ccm_report_id} className="py-3">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="text-sm font-medium text-gray-800 dark:text-white/90">
-                        {r.patient_name}{" "}
-                        <span className="text-xs text-gray-400">
-                          · {r.patient_id}
-                        </span>
-                      </div>
-                      <div className="text-theme-sm text-gray-500 mt-1">
-                        {r.content}
-                      </div>
-                      <div className="mt-2 text-theme-xs text-gray-500">
-                        <div className="flex flex-wrap items-center gap-2">
-                          <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs text-gray-700 dark:bg-white/[0.04] dark:text-gray-200">
-                            CPT: {r.cpt_code}
-                          </span>
-                          <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs text-gray-700 dark:bg-white/[0.04] dark:text-gray-200">
-                            Previous: {r.previous_minutes_counted} min
-                          </span>
-                          <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs text-gray-700 dark:bg-white/[0.04] dark:text-gray-200">
-                            Total: {r.total_minutes_counted} min
-                          </span>
-                          <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs text-gray-700 dark:bg-white/[0.04] dark:text-gray-200">
-                            Amount billed: {r.total_amount_billed}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-theme-xs text-gray-400 text-right">
-                      <div>
-                        {formatDistanceToNow(r.timestamp, { addSuffix: true })}
-                      </div>
-                      <div className="mt-1">{r.minutes_documented} min</div>
-                    </div>
-                  </div>
-                  <div className="mt-3 text-theme-xs text-gray-500">
-                    <div>Category: {r.category}</div>
-                    <div>Billing: {r.billing_status}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
