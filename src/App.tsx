@@ -22,7 +22,7 @@ import Buttons from "./pages/UiElements/Buttons";
 import Images from "./pages/UiElements/Images";
 import Videos from "./pages/UiElements/Videos";
 import UserProfiles from "./pages/UserProfiles";
-import ViewCSV from "./pages/CSVRecords/ViewCSV";
+// import ViewCSV from "./pages/CSVRecords/ViewCSV";
 import { setAuthenticated, setUnAuthenticated } from "./redux/slice/auth";
 import Gaps from "./pages/Patients/gaps";
 import Vitals from "./pages/Patients/vitals";
@@ -88,7 +88,7 @@ export default function App() {
             {/* Others Page */}
             <Route path="/profile" element={<UserProfiles />} />
             <Route path="/calendar" element={<Calendar />} />
-            <Route path="/csv/view" element={<ViewCSV />} />
+            {/* <Route path="/csv/view" element={<ViewCSV />} /> */}
             <Route path="/patients" element={<PatientRecords />} />
             <Route path="/patients/gaps" element={<Gaps />} />
             <Route path="/patients/vitals" element={<Vitals />} />
