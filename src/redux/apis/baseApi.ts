@@ -10,7 +10,6 @@ export const apis = createApi({
     baseUrl,
     credentials: "include",
   }),
-  keepUnusedDataFor: 0.01,
-  tagTypes: ["Auth", "Billing"],
+  tagTypes: ["Auth", "Billing", "Patients"],
   endpoints: () => ({}),
 });

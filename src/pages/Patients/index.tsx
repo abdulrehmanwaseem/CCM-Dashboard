@@ -1,32 +1,24 @@
-import { useMemo, useState } from "react";
+import PageBreadcrumb from "@/components/common/PageBreadCrumb";
+import PageMeta from "@/components/common/PageMeta";
+import Spinner from "@/components/common/Spinner";
+import { useGetPatientsDemographicsQuery } from "@/redux/apis/patientsApi";
+import { useState } from "react";
 import Pagination from "./Pagination";
 import PatientsTable from "./PatientsTable";
 import SearchBar from "./SearchBar";
-import patientsData from "./patientsData";
-import PageMeta from "@/components/common/PageMeta";
-import PageBreadcrumb from "@/components/common/PageBreadCrumb";
 
 const PatientsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const recordsPerPage = 10;
-  const filteredPatients = useMemo(() => {
-    if (!searchTerm) return patientsData;
-    const s = searchTerm.toLowerCase();
-    return patientsData.filter((p) =>
-      `${p.patient_name} ${p.patient_id} ${p.cpt_code}`
-        .toLowerCase()
-        .includes(s)
-    );
-  }, [searchTerm]);
+  const recordsPerPage = 50;
 
-  const totalRecords = filteredPatients.length;
-  const indexOfLastRecord = currentPage * recordsPerPage;
-  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
-  const currentRecords = filteredPatients.slice(
-    indexOfFirstRecord,
-    indexOfLastRecord
-  );
+  const offset = (currentPage - 1) * recordsPerPage;
+
+  const { data, isLoading } = useGetPatientsDemographicsQuery({
+    limit: recordsPerPage,
+    offset,
+  });
+
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
@@ -45,13 +37,20 @@ const PatientsPage = () => {
           setCurrentPage(1);
         }}
       />
-      <PatientsTable patients={currentRecords} />
-      <Pagination
-        currentPage={currentPage}
-        totalRecords={totalRecords}
-        recordsPerPage={recordsPerPage}
-        onPageChange={handlePageChange}
-      />
+
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <>
+          <PatientsTable data={data?.data ?? []} />
+          <Pagination
+            currentPage={currentPage}
+            totalRecords={data?.count ?? 0}
+            recordsPerPage={recordsPerPage}
+            onPageChange={handlePageChange}
+          />
+        </>
+      )}
     </>
   );
 };
