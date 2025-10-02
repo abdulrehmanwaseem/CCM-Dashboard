@@ -4,13 +4,16 @@ import type { AppDispatch, RootState } from "@/redux/store";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "./Spinner";
+import { skipToken } from "@reduxjs/toolkit/query";
 
 const PatientDetailsModal: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const modalState = useSelector((state: RootState) => state.modal);
-  const patientId = modalState.data;
+  const patientId = modalState.data as string | null;
 
-  const { data, isLoading } = useGetPatientsSummaryByIdQuery(patientId);
+  const { data, isLoading } = useGetPatientsSummaryByIdQuery(
+    patientId ?? skipToken
+  );
 
   const basic_info = data?.basic_info;
 
