@@ -1,26 +1,15 @@
 import Spinner from "@/components/common/Spinner";
 import { openModal } from "@/redux/slice/modal";
 import type { AppDispatch } from "@/redux/store";
-import { Patient } from "@/types/patients";
+import type { Vitals } from "@/types/patients";
 import { useDispatch } from "react-redux";
 
-// interface Patient {
-//   patient_id: string;
-//   patient_name: string;
-//   cpt_code?: string;
-//   total_minutes_counted?: number;
-//   total_amount_billed?: string;
-//   billing_status?: string;
-//   timestamp?: string | number | Date;
-//   ccm_report_id?: string;
-// }
-
 interface Props {
-  data: Patient[];
+  data: Vitals[];
   isFetching: boolean;
 }
 
-export default function PatientsTable({ data, isFetching }: Props) {
+function VitalsTable({ data, isFetching }: Props) {
   const dispatch = useDispatch<AppDispatch>();
 
   return (
@@ -33,46 +22,43 @@ export default function PatientsTable({ data, isFetching }: Props) {
         <table className="w-full text-sm">
           <thead>
             <tr className="text-left text-xs text-gray-500">
-              <th className="py-3">Patient</th>
-              <th className="py-3">DOB</th>
-              <th className="py-3">Sex</th>
+              <th className="py-3">Patient ID</th>
+              <th className="py-3">BP (Systolic/Diastolic)</th>
+              <th className="py-3">Heart Rate</th>
+              <th className="py-3">Temperature (°F)</th>
+              <th className="py-3">O₂ Saturation (%)</th>
+              <th className="py-3">Height (in)</th>
+              <th className="py-3">Weight (lbs)</th>
+              <th className="py-3">BMI</th>
+              <th className="py-3">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {data.map((p: Patient) => (
-              <tr key={p.patient_id} className="border-t border-gray-100">
+            {data?.map((v: Vitals) => (
+              <tr key={v.patient_id} className="border-t border-gray-100">
+                <td className="py-3">{v.patient_id}</td>
                 <td className="py-3">
-                  <div className="font-medium text-gray-800">
-                    {p.first_name} {p.last_name}
-                  </div>
-                  <div className="text-xs text-gray-500">{p.patient_id}</div>
+                  {v.bp_s && v.bp_d ? `${v.bp_s}/${v.bp_d}` : "-"}
                 </td>
-                <td className="py-3">{p.dob}</td>
-                <td className="py-3">{p.sex}</td>
-                {/* <td className="py-3">{p.total_amount_billed}</td>
-              <td className="py-3">
-                <span
-                  className={`inline-flex items-center px-2 py-0.5 text-xs rounded-full ${
-                    p.billing_status === "completed"
-                      ? "bg-green-100 text-green-700"
-                      : p.billing_status === "flagged"
-                      ? "bg-red-100 text-red-700"
-                      : "bg-amber-100 text-amber-700"
-                  }`}
-                >
-                  {p.billing_status}
-                </span>
-              </td> */}
+                <td className="py-3">{v.hr ?? "-"}</td>
+                <td className="py-3">{v.temperature ?? "-"}</td>
+                <td className="py-3">{v.o2_percent ?? "-"}</td>
+                <td className="py-3">{v.height ?? "-"}</td>
+                <td className="py-3">{v.weight ?? "-"}</td>
+                <td className="py-3">{v.bmi ?? "-"}</td>
+
                 <td className="py-3">
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() =>
                         dispatch(
-                          openModal({
-                            modalType: "patientDetails",
-                            data: p.patient_id,
-                            MODAL_WIDTH: "max-w-[500px]",
-                          })
+                          dispatch(
+                            openModal({
+                              modalType: "patientDetails",
+                              data: v.patient_id,
+                              MODAL_WIDTH: "max-w-[500px]",
+                            })
+                          )
                         )
                       }
                       title="View details"
@@ -113,3 +99,5 @@ export default function PatientsTable({ data, isFetching }: Props) {
     </div>
   );
 }
+
+export default VitalsTable;
