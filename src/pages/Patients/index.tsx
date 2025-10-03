@@ -14,7 +14,7 @@ const PatientsPage = () => {
 
   const offset = (currentPage - 1) * recordsPerPage;
 
-  const { data, isLoading } = useGetPatientsDemographicsQuery({
+  const { data, isLoading, isFetching } = useGetPatientsDemographicsQuery({
     limit: recordsPerPage,
     offset,
   });
@@ -26,8 +26,8 @@ const PatientsPage = () => {
   return (
     <>
       <PageMeta
-        title="React.js Billing Records Dashboard | TailAdmin - Next.js Admin Dashboard Template"
-        description="This is React.js Billing Records Dashboard page for TailAdmin - React.js Tailwind CSS Admin Dashboard Template"
+        title="Patients Records"
+        description="These are Patients Records Dashboard page"
       />
       <PageBreadcrumb pageTitle="Patient Records" />
       <SearchBar
@@ -42,7 +42,7 @@ const PatientsPage = () => {
         <Spinner />
       ) : (
         <>
-          <PatientsTable data={data?.data ?? []} />
+          <PatientsTable data={data?.data ?? []} isFetching={isFetching} />
           <Pagination
             currentPage={currentPage}
             totalRecords={data?.count ?? 0}

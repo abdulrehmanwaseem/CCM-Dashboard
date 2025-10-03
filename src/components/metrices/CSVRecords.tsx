@@ -116,7 +116,9 @@ export default function CSVRecords() {
 
       <div className="divide-y divide-gray-100 dark:divide-gray-800">
         {isLoading ? (
-          <Spinner />
+          <div className="mb-8">
+            <Spinner />
+          </div>
         ) : (
           data?.csv_files.map((file) => (
             <div
