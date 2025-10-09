@@ -28,6 +28,8 @@ import Gaps from "./pages/Patients/gaps";
 import Vitals from "./pages/Patients/vitals";
 import Medications from "./pages/Patients/medications";
 import Metrics from "./pages/Patients/metrics";
+import History from "./pages/Patients/history";
+import HistoryDetail from "./pages/Patients/history/HistoryDetail";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -94,6 +96,8 @@ export default function App() {
             <Route path="/patients/vitals" element={<Vitals />} />
             <Route path="/patients/medications" element={<Medications />} />
             <Route path="/patients/metrics" element={<Metrics />} />
+            <Route path="/patients/history" element={<History />} />
+            <Route path="/patients/history/:id" element={<HistoryDetail />} />
 
             <Route path="/blank" element={<Blank />} />
 

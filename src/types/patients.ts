@@ -20,7 +20,11 @@ export interface Patient {
   first_name: string;
   last_name: string;
   dob: string;
-  sex: "Male" | "Female" | "Unknown";
+  sex: string;
+  patient_status: string | null;
+  complete_address: string | null;
+  city_state: string | null;
+  zipcode: string | null;
 }
 
 export interface PatientsResponse {
@@ -32,6 +36,9 @@ export interface PatientsResponse {
 
 export interface MedicationRecord {
   patient_id: string;
+  first_name: string;
+  last_name: string;
+  active_problem: string[];
   medication_name: string | null;
   med_start_date: string | null;
   bill_date: string | null;
@@ -48,6 +55,8 @@ export interface MedicationsResponse {
 
 export interface Vitals {
   patient_id: string;
+  first_name: string;
+  last_name: string;
   bp_s: number | null; // Blood Pressure (Systolic)
   bp_d: number | null; // Blood Pressure (Diastolic)
   hr: number | null; // Heart Rate
@@ -98,4 +107,61 @@ export interface PatientInfo {
 
 export interface Patient {
   basic_info: PatientInfo;
+}
+
+export interface SocialSections {
+  family: string[];
+  diet: string[];
+  functional: string[];
+  habits: string[];
+  maintenance: string[];
+  past: string[];
+  social: string[];
+  other: string[];
+}
+
+export interface SocialSummary {
+  smoking: string;
+  vaping: string;
+  tobacco: string;
+  alcohol: string;
+  drug_use: string;
+}
+
+export interface History {
+  patient_id: string;
+  name: string;
+  age: number;
+  gender: string;
+  complete_address: string;
+  city_state: string;
+  zipcode: string;
+  patient_status: string;
+  marital_status: string;
+  active_problem: string[];
+  social_sections: SocialSections;
+  social_summary: SocialSummary;
+}
+export interface HistoryDetail {
+  data: {
+    patient_id: string;
+    name: string;
+    age: number;
+    gender: string;
+    complete_address: string;
+    city_state: string;
+    zipcode: string;
+    patient_status: string;
+    marital_status: string;
+    active_problem: string[];
+    social_sections: SocialSections;
+    social_summary: SocialSummary;
+  };
+}
+
+export interface HistoryResponse {
+  count: number;
+  limit: number;
+  offset: number;
+  data: History[];
 }

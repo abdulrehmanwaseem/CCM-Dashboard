@@ -22,7 +22,7 @@ function VitalsTable({ data, isFetching }: Props) {
         <table className="w-full text-sm">
           <thead>
             <tr className="text-left text-xs text-gray-500">
-              <th className="py-3">Patient ID</th>
+              <th className="py-3 text-sm">Patient</th>
               <th className="py-3">BP (Systolic/Diastolic)</th>
               <th className="py-3">Heart Rate</th>
               <th className="py-3">Temperature (°F)</th>
@@ -36,7 +36,12 @@ function VitalsTable({ data, isFetching }: Props) {
           <tbody>
             {data?.map((v: Vitals) => (
               <tr key={v.patient_id} className="border-t border-gray-100">
-                <td className="py-3">{v.patient_id}</td>
+                <td className="py-3">
+                  <div className="font-medium text-gray-800">
+                    {v.first_name} {v.last_name}
+                  </div>
+                  <div className="text-xs text-gray-500">{v.patient_id}</div>
+                </td>
                 <td className="py-3">
                   {v.bp_s && v.bp_d ? `${v.bp_s}/${v.bp_d}` : "-"}
                 </td>

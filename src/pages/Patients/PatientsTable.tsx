@@ -36,6 +36,10 @@ export default function PatientsTable({ data, isFetching }: Props) {
               <th className="py-3">Patient</th>
               <th className="py-3">DOB</th>
               <th className="py-3">Sex</th>
+              <th className="py-3">Address</th>
+              <th className="py-3">City / State</th>
+              <th className="py-3">Zipcode</th>
+              <th className="py-3">Status</th>
             </tr>
           </thead>
           <tbody>
@@ -49,20 +53,11 @@ export default function PatientsTable({ data, isFetching }: Props) {
                 </td>
                 <td className="py-3">{p.dob}</td>
                 <td className="py-3">{p.sex}</td>
-                {/* <td className="py-3">{p.total_amount_billed}</td>
-              <td className="py-3">
-                <span
-                  className={`inline-flex items-center px-2 py-0.5 text-xs rounded-full ${
-                    p.billing_status === "completed"
-                      ? "bg-green-100 text-green-700"
-                      : p.billing_status === "flagged"
-                      ? "bg-red-100 text-red-700"
-                      : "bg-amber-100 text-amber-700"
-                  }`}
-                >
-                  {p.billing_status}
-                </span>
-              </td> */}
+                <td className="py-3">{p.complete_address}</td>
+                <td className="py-3">{p.city_state}</td>
+                <td className="py-3">{p.zipcode}</td>
+                <td className="py-3 capitalize">{p.patient_status}</td>
+
                 <td className="py-3">
                   <div className="flex items-center gap-2">
                     <button

@@ -75,7 +75,7 @@ const PatientDetailsModal: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="flex gap-3 mt-6">
+          <div className="flex gap-3 mt-4">
             <button
               onClick={handleClose}
               className="flex-1 rounded-lg border border-gray-300 px-4 py-2 text-sm text-gray-700"

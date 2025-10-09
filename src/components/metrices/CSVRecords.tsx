@@ -90,6 +90,7 @@ export default function CSVRecords() {
     "Patient Vitals": "/patients/vitals",
     "Patient Medications": "/patients/medications",
     "Patient Metrics": "/patients/metrics",
+    "Patient History": "/patients/history",
   };
 
   return (
