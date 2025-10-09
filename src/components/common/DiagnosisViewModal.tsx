@@ -1,0 +1,37 @@
+import { closeModal } from "@/redux/slice/modal";
+import type { RootState } from "@/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+
+export default function DiagnosisViewModal() {
+  const dispatch = useDispatch();
+  const { data } = useSelector((state: RootState) => state.modal);
+
+  const problems: string[] = Array.isArray(data) ? data : [];
+
+  return (
+    <>
+      <h2 className="text-lg font-semibold mb-3">
+        Diagnosis / Active Problems
+      </h2>
+      {problems.length === 0 ? (
+        <p className="text-gray-500 text-sm">No active problems found.</p>
+      ) : (
+        <ul className="list-disc pl-8 space-y-1 max-h-80 overflow-y-auto bg-gray-50 rounded-lg p-3 border">
+          {problems.map((problem, idx) => (
+            <li key={idx} className="text-sm text-gray-800">
+              {problem}
+            </li>
+          ))}
+        </ul>
+      )}
+      <div className="flex gap-3 mt-4">
+        <button
+          onClick={() => dispatch(closeModal())}
+          className="flex-1 rounded-lg border border-gray-300 px-4 py-2 text-sm text-gray-700"
+        >
+          Close
+        </button>
+      </div>
+    </>
+  );
+}

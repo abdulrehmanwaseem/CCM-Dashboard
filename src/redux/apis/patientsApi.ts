@@ -1,5 +1,7 @@
 import {
   CsvFilesResponse,
+  HistoryDetail,
+  HistoryResponse,
   MedicationsResponse,
   Patient,
   PatientDashboard,
@@ -62,7 +64,22 @@ const patientsApi = apis.injectEndpoints({
     }),
     getPatientsMetrics: builder.query({
       query: () => ({
-        url: "/csv/patient-metrics",
+        url: "/patient-metrics",
+      }),
+      providesTags: ["Patients"],
+    }),
+    getPatientsHistory: builder.query<
+      HistoryResponse,
+      { limit: number; offset: number }
+    >({
+      query: ({ limit, offset }) => ({
+        url: `/patient-history?limit=${limit}&offset=${offset}`,
+      }),
+      providesTags: ["Patients"],
+    }),
+    getHistoryById: builder.query<HistoryDetail, string>({
+      query: (patient_id) => ({
+        url: `/patient-history/${patient_id}`,
       }),
       providesTags: ["Patients"],
     }),
@@ -84,4 +101,6 @@ export const {
   useGetPatientsMedicationQuery,
   useGetPatientsMetricsQuery,
   useGetPatientsSummaryByIdQuery,
+  useGetPatientsHistoryQuery,
+  useGetHistoryByIdQuery,
 } = patientsApi;

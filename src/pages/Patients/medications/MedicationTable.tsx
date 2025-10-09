@@ -22,7 +22,8 @@ function MedicationTable({ data, isFetching }: Props) {
         <table className="w-full text-sm">
           <thead>
             <tr className="text-left text-xs text-gray-500">
-              <th className="py-3">Patient ID</th>
+              <th className="py-3 text-sm">Patient</th>
+              <th className="py-3 text-sm">Demographics</th>
               <th className="py-3">Medication Name</th>
               <th className="py-3">Medication start Date</th>
               <th className="py-3">CPT Code</th>
@@ -33,14 +34,34 @@ function MedicationTable({ data, isFetching }: Props) {
           <tbody>
             {data?.map((p: MedicationRecord) => (
               <tr key={p.patient_id} className="border-t border-gray-100">
-                {/* <td className="py-3">
-                     <div className="font-medium text-gray-800">
-                       {p.patient_id}
-                     </div>
-                     <div className="text-xs text-gray-500">{p.patient_id}</div>
-                   </td> */}
-                <td className="py-3">{p.patient_id}</td>
+                <td className="py-3 w-40">
+                  <div className="font-medium text-gray-800">
+                    {p.first_name} {p.last_name}
+                  </div>
+                  <div className="text-xs text-gray-500">{p.patient_id}</div>
+                </td>
                 <td className="py-3">
+                  {p.active_problem.length === 0 ? (
+                    "-"
+                  ) : (
+                    <button
+                      onClick={() =>
+                        dispatch(
+                          openModal({
+                            modalType: "diagnosisView",
+                            data: p.active_problem,
+                            MODAL_WIDTH: "max-w-[500px]",
+                          })
+                        )
+                      }
+                      className="text-blue-600 hover:underline"
+                    >
+                      Click to View
+                    </button>
+                  )}
+                </td>
+
+                <td className="py-3 w-48 pr-8">
                   {p.medication_name === null ? "-" : p.medication_name}
                 </td>
                 <td className="py-3">

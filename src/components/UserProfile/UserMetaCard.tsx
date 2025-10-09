@@ -6,7 +6,7 @@ export default function UserMetaCard({ user }) {
       <div className="flex flex-col gap-5 xl:flex-row xl:items-center xl:justify-between">
         <div className="flex flex-col items-center w-full gap-6 xl:flex-row">
           <div className="w-20 h-20 overflow-hidden border border-gray-200 rounded-full dark:border-gray-800">
-            <img src={user.avatar} alt="user" />
+            <img src={user?.avatar} alt="user" />
           </div>
           <div className="order-3 xl:order-2">
             {user.full_name && (

@@ -11,7 +11,7 @@ export default function UserProfiles() {
 
   const [userData, setUserData] = useState({
     email: "",
-    avatar: "",
+    // avatar: "",
     full_name: "",
     firstName: "",
     lastName: "",

@@ -4,6 +4,7 @@ import { closeModal } from "@/redux/slice/modal";
 import ConfirmationModal from "./ConfirmationModal";
 import PatientDetailsModal from "./PatientDetailsModal";
 import type { RootState, AppDispatch } from "@/redux/store";
+import DiagnosisViewModal from "./DiagnosisViewModal";
 
 const ModalWrapper = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -35,6 +36,9 @@ const checkModal = (name: string) => {
   switch (name) {
     case "confirmation":
       component = <ConfirmationModal />;
+      break;
+    case "diagnosisView":
+      return <DiagnosisViewModal />;
       break;
     case "patientDetails":
       component = <PatientDetailsModal />;
