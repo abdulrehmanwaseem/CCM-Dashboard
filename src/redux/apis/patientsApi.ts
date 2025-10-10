@@ -3,6 +3,7 @@ import {
   HistoryDetail,
   HistoryResponse,
   MedicationsResponse,
+  MetricsResponse,
   Patient,
   PatientDashboard,
   PatientGapsResponse,
@@ -37,11 +38,15 @@ const patientsApi = apis.injectEndpoints({
 
     getPatientsGaps: builder.query<
       PatientGapsResponse,
-      { limit: number; offset: number }
+      { limit: number; offset: number; patient_id?: string }
     >({
-      query: ({ limit, offset }) => ({
-        url: `/patient-gaps?limit=${limit}&offset=${offset}`,
-      }),
+      query: ({ limit, offset, patient_id }) => {
+        let url = `/patient-gaps?limit=${limit}&offset=${offset}`;
+        if (patient_id) {
+          url += `&patient_id=${patient_id}`;
+        }
+        return { url };
+      },
       providesTags: ["Patients"],
     }),
     getPatientsVitals: builder.query<
@@ -62,9 +67,12 @@ const patientsApi = apis.injectEndpoints({
       }),
       providesTags: ["Patients"],
     }),
-    getPatientsMetrics: builder.query({
-      query: () => ({
-        url: "/patient-metrics",
+    getPatientsMetrics: builder.query<
+      MetricsResponse,
+      { limit: number; offset: number }
+    >({
+      query: ({ limit, offset }) => ({
+        url: `/patient-metrics?${limit}&offset=${offset}`,
       }),
       providesTags: ["Patients"],
     }),

@@ -26,6 +26,13 @@ const authApi = apis.injectEndpoints({
       }),
       invalidatesTags: ["Auth"],
     }),
+    googleOauth: builder.mutation({
+      query: () => ({
+        url: "auth/google",
+        method: "POST",
+      }),
+      invalidatesTags: ["Auth"],
+    }),
   }),
 });
 
@@ -33,4 +40,5 @@ export const {
   useGetUserProfileQuery,
   useVerifyTokenMutation,
   useLogoutMutation,
+  useGoogleOauthMutation,
 } = authApi;

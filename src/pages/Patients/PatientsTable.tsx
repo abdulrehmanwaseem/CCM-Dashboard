@@ -24,7 +24,7 @@ export default function PatientsTable({ data, isFetching }: Props) {
   const dispatch = useDispatch<AppDispatch>();
 
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-4">
+    <div className="rounded-2xl border border-gray-200 bg-white p-4 overflow-x-auto">
       {isFetching ? (
         <div className="my-5">
           <Spinner />

@@ -26,9 +26,12 @@ function GapsData({ data, isFetching }: Props) {
               className="border border-gray-200 rounded-xl p-4 shadow-sm bg-gray-50"
             >
               <div className="flex justify-between items-center mb-2">
-                <h3 className="text-sm font-semibold text-gray-800">
-                  Patient ID: {gap.patient_id}
-                </h3>
+                <div className="text-lg font-medium">
+                  <div className="text-gray-800">
+                    {gap.first_name} {gap.last_name}
+                  </div>
+                  <div className="text-xs text-gray-500">{gap.patient_id}</div>
+                </div>
                 <button
                   onClick={() =>
                     dispatch(
@@ -72,8 +75,8 @@ function GapsData({ data, isFetching }: Props) {
               </div>
 
               <ul className="list-disc list-inside text-sm text-gray-600 space-y-1">
-                {gap.gaps_found.split(",").map((item, idx) => (
-                  <li key={idx}>{item.trim()}</li>
+                {gap?.gaps_found?.map((item, idx) => (
+                  <li key={idx}>{item}</li>
                 ))}
               </ul>
             </div>

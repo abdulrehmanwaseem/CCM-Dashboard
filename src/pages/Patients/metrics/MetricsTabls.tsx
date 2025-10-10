@@ -1,15 +1,15 @@
 import Spinner from "@/components/common/Spinner";
 import { openModal } from "@/redux/slice/modal";
-import type { AppDispatch } from "@/redux/store";
-import type { MedicationRecord } from "@/types/patients";
+import { AppDispatch } from "@/redux/store";
+import type { Metrics } from "@/types/patients";
 import { useDispatch } from "react-redux";
 
 interface Props {
-  data: MedicationRecord[];
+  data: Metrics[];
   isFetching: boolean;
 }
 
-function MedicationTable({ data, isFetching }: Props) {
+export default function MetricsTable({ data, isFetching }: Props) {
   const dispatch = useDispatch<AppDispatch>();
 
   return (
@@ -23,60 +23,42 @@ function MedicationTable({ data, isFetching }: Props) {
           <thead>
             <tr className="text-left text-xs text-gray-500">
               <th className="py-3 text-sm">Patient</th>
-              <th className="py-3 text-sm">Demographics</th>
-              <th className="py-3">Medication Name</th>
-              <th className="py-3">Medication start Date</th>
-              <th className="py-3">CPT Code</th>
-              <th className="py-3">Bill Date</th>
-              <th className="py-3">ICD-10 Code</th>
+              <th className="py-3 text-sm">PHQ-9 Score</th>
+              <th className="py-3 text-sm">Cognitive Score</th>
+              <th className="py-3 text-sm">ACP Status</th>
+              <th className="py-3 text-sm">Careplan Status</th>
             </tr>
           </thead>
           <tbody>
-            {data?.map((p: MedicationRecord) => (
+            {data?.map((p) => (
               <tr key={p.patient_id} className="border-t border-gray-100">
+                {/* Patient Info */}
                 <td className="py-3 w-40">
                   <div className="font-medium text-gray-800">
                     {p.first_name} {p.last_name}
                   </div>
                   <div className="text-xs text-gray-500">{p.patient_id}</div>
                 </td>
+
+                {/* PHQ-9 */}
                 <td className="py-3">
-                  {p.active_problem.length === 0 ? (
-                    "-"
-                  ) : (
-                    <button
-                      onClick={() =>
-                        dispatch(
-                          openModal({
-                            modalType: "diagnosisView",
-                            data: p.active_problem,
-                            MODAL_WIDTH: "max-w-[500px]",
-                          })
-                        )
-                      }
-                      className="text-blue-600 hover:underline"
-                    >
-                      Click to View
-                    </button>
-                  )}
+                  {p.phq9_score === null ? "-" : p.phq9_score}
                 </td>
 
-                <td className="py-3 w-48 pr-8">
-                  {p.medication_name === null ? "-" : p.medication_name}
-                </td>
+                {/* Cognitive */}
                 <td className="py-3">
-                  {p.med_start_date === null ? "-" : p.med_start_date}
-                </td>
-                <td className="py-3">
-                  {p.cpt_code === null ? "-" : p.cpt_code}
-                </td>
-                <td className="py-3">
-                  {p.bill_date === null ? "-" : p.bill_date}
-                </td>
-                <td className="py-3">
-                  {p.icd10_code === null ? "-" : p.icd10_code}
+                  {p.cognitive_score === null ? "-" : p.cognitive_score}
                 </td>
 
+                {/* ACP */}
+                <td className="py-3">
+                  {p.acp_status === null ? "-" : p.acp_status}
+                </td>
+
+                {/* Careplan */}
+                <td className="py-3">
+                  {p.careplan_status === null ? "-" : p.careplan_status}
+                </td>
                 <td className="py-3">
                   <div className="flex items-center gap-2">
                     <button
@@ -127,5 +109,3 @@ function MedicationTable({ data, isFetching }: Props) {
     </div>
   );
 }
-
-export default MedicationTable;

@@ -76,7 +76,9 @@ export interface VitalsResponse {
 
 export interface PatientGap {
   patient_id: string;
-  gaps_found: string;
+  first_name: string;
+  last_name: string;
+  gaps_found: string[];
 }
 
 export interface PatientGapsResponse {
@@ -84,6 +86,27 @@ export interface PatientGapsResponse {
   limit: number;
   offset: number;
   count: number;
+}
+
+export interface Metrics {
+  patient_id: string;
+  first_name: string;
+  last_name: string;
+  phq9_score: number | null;
+  phq9_date: string | null;
+  cognitive_score: number | null;
+  cognitive_date: string | null;
+  acp_status: string | null;
+  acp_date: string | null;
+  careplan_status: string | null;
+  careplan_date: string | null;
+}
+
+export interface MetricsResponse {
+  count: number;
+  limit: number;
+  offset: number;
+  data: Metrics[];
 }
 
 export interface PatientInfo {
