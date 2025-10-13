@@ -5,9 +5,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import { ScrollToTop } from "./components/common/ScrollToTop";
 import AppLayout from "./layout/AppLayout";
-import SignIn from "./pages/AuthPages/SignIn";
-import SignUp from "./pages/AuthPages/SignUp";
-import PatientRecords from "./pages/Patients";
+// import SignIn from "./pages/AuthPages/SignIn";
+// import SignUp from "./pages/AuthPages/SignUp";
 import Blank from "./pages/Blank";
 import Calendar from "./pages/Calendar";
 import BarChart from "./pages/Charts/BarChart";
@@ -15,6 +14,7 @@ import LineChart from "./pages/Charts/LineChart";
 import Home from "./pages/Dashboard/Home";
 import FormElements from "./pages/Forms/FormElements";
 import NotFound from "./pages/OtherPage/NotFound";
+import PatientRecords from "./pages/Patients";
 import Alerts from "./pages/UiElements/Alerts";
 import Avatars from "./pages/UiElements/Avatars";
 import Badges from "./pages/UiElements/Badges";
@@ -23,32 +23,30 @@ import Images from "./pages/UiElements/Images";
 import Videos from "./pages/UiElements/Videos";
 import UserProfiles from "./pages/UserProfiles";
 // import ViewCSV from "./pages/CSVRecords/ViewCSV";
-import { setAuthenticated, setUnAuthenticated } from "./redux/slice/auth";
+import GoogleAuth from "./pages/AuthPages/GoogleAuth";
 import Gaps from "./pages/Patients/gaps";
-import Vitals from "./pages/Patients/vitals";
-import Medications from "./pages/Patients/medications";
-import Metrics from "./pages/Patients/metrics";
 import History from "./pages/Patients/history";
 import HistoryDetail from "./pages/Patients/history/HistoryDetail";
+import Medications from "./pages/Patients/medications";
+import Metrics from "./pages/Patients/metrics";
+import Vitals from "./pages/Patients/vitals";
+import { useGetUserProfileQuery } from "./redux/apis/authApi";
+import { setAuthenticated, setUnAuthenticated } from "./redux/slice/auth";
 
 export default function App() {
   const dispatch = useDispatch();
-  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const { data, isSuccess, isError } = useGetUserProfileQuery(undefined);
+  console.log("data", data);
+
   const excludedEndpoints = [""];
-  const auth = localStorage.getItem("isAuthenticated");
 
   useEffect(() => {
-    if (auth === "true") {
-      const userData = localStorage.getItem("userData");
-      if (userData) {
-        dispatch(setAuthenticated(JSON.parse(userData)));
-      } else {
-        dispatch(setAuthenticated(null));
-      }
-    } else {
+    if (isSuccess && data) {
+      dispatch(setAuthenticated(data));
+    } else if (isError || !data) {
       dispatch(setUnAuthenticated());
     }
-  }, [dispatch, auth]);
+  }, [isSuccess, isError, data, dispatch]);
 
   const isSomeQueryPending = useSelector(
     (state: RootState) =>
@@ -73,11 +71,13 @@ export default function App() {
         <ScrollToTop />
         <Routes>
           {/* Auth Layout */}
-          <Route
+          {/* <Route
             path="/signin"
             element={<SignIn isAuthenticated={isAuthenticated} />}
           />
-          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signup" element={<SignUp />} /> */}
+          <Route path="/auth" element={<GoogleAuth />} />
+
           {/* Dashboard Layout */}
           <Route
             element={

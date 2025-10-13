@@ -15,7 +15,7 @@ function MedicationTable({ data, isFetching }: Props) {
   return (
     <div className="rounded-2xl border border-gray-200 bg-white p-4">
       {isFetching ? (
-        <div className="my-5">
+        <div className="my-5 h-[70vh]">
           <Spinner />
         </div>
       ) : (
@@ -23,7 +23,7 @@ function MedicationTable({ data, isFetching }: Props) {
           <thead>
             <tr className="text-left text-xs text-gray-500">
               <th className="py-3 text-sm">Patient</th>
-              <th className="py-3 text-sm">Demographics</th>
+              <th className="py-3 text-sm">Diagnosis</th>
               <th className="py-3">Medication Name</th>
               <th className="py-3">Medication start Date</th>
               <th className="py-3">CPT Code</th>
@@ -40,10 +40,15 @@ function MedicationTable({ data, isFetching }: Props) {
                   </div>
                   <div className="text-xs text-gray-500">{p.patient_id}</div>
                 </td>
-                <td className="py-3">
-                  {p.active_problem.length === 0 ? (
-                    "-"
-                  ) : (
+                <td className="py-3 w-52 pr-4">
+                  <div className="">
+                    {p.active_problem.slice(0, 2).map((item, index) => (
+                      <span key={index} className="text-sm block">
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                  {p.active_problem.length > 2 && (
                     <button
                       onClick={() =>
                         dispatch(
@@ -54,9 +59,9 @@ function MedicationTable({ data, isFetching }: Props) {
                           })
                         )
                       }
-                      className="text-blue-600 hover:underline"
+                      className="text-blue-600 text-sm hover:underline mt-1"
                     >
-                      Click to View
+                      +{p.active_problem.length - 2} more
                     </button>
                   )}
                 </td>

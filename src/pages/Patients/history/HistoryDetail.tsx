@@ -1,3 +1,4 @@
+import Spinner from "@/components/common/Spinner";
 import { useGetHistoryByIdQuery } from "@/redux/apis/patientsApi";
 import { useParams } from "react-router";
 
@@ -8,8 +9,8 @@ export default function HistoryDetail() {
 
   if (isLoading) {
     return (
-      <div className="max-w-4xl mx-auto p-6">
-        <p className="text-center ">Loading patient details...</p>
+      <div className="h-[70vh]">
+        <Spinner />
       </div>
     );
   }

@@ -54,8 +54,8 @@ const Header: React.FC<HeaderProps> = ({ onClick, onToggle }) => {
                 fill="currentColor"
               />
             </svg>
-            {/* Cross Icon */}
           </button>
+          {/* Cross Icon */}
           <button
             onClick={onClick}
             className="items-center justify-center hidden w-10 h-10 text-gray-500 border-gray-200 rounded-lg z-99999 dark:border-gray-800 lg:flex dark:text-gray-400 lg:h-11 lg:w-11 lg:border"

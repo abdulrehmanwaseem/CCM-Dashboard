@@ -15,7 +15,7 @@ export default function MetricsTable({ data, isFetching }: Props) {
   return (
     <div className="rounded-2xl border border-gray-200 bg-white p-4">
       {isFetching ? (
-        <div className="my-5">
+        <div className="my-5 h-[70vh]">
           <Spinner />
         </div>
       ) : (

@@ -13,9 +13,9 @@ function GapsData({ data, isFetching }: Props) {
   const dispatch = useDispatch<AppDispatch>();
 
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-4">
+    <div className="rounded-2xl ">
       {isFetching ? (
-        <div className="my-5">
+        <div className="my-5 h-[70vh]">
           <Spinner />
         </div>
       ) : (
@@ -23,10 +23,10 @@ function GapsData({ data, isFetching }: Props) {
           {data?.map((gap: PatientGap) => (
             <div
               key={gap.patient_id}
-              className="border border-gray-200 rounded-xl p-4 shadow-sm bg-gray-50"
+              className="border border-gray-200 rounded-lg p-4 shadow-sm bg-gray-50"
             >
               <div className="flex justify-between items-center mb-2">
-                <div className="text-lg font-medium">
+                <div className="text-lg font-medium mb-2">
                   <div className="text-gray-800">
                     {gap.first_name} {gap.last_name}
                   </div>
