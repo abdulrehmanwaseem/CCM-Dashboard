@@ -1,7 +1,7 @@
 import { RootState } from "@/redux/store";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import { ScrollToTop } from "./components/common/ScrollToTop";
 import AppLayout from "./layout/AppLayout";
@@ -32,21 +32,16 @@ import Metrics from "./pages/Patients/metrics";
 import Vitals from "./pages/Patients/vitals";
 import { useGetUserProfileQuery } from "./redux/apis/authApi";
 import { setAuthenticated, setUnAuthenticated } from "./redux/slice/auth";
+import Spinner from "./components/common/Spinner";
 
 export default function App() {
   const dispatch = useDispatch();
-  const { data, isSuccess, isError } = useGetUserProfileQuery(undefined);
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const { data, isSuccess, isError, isLoading } =
+    useGetUserProfileQuery(undefined);
   console.log("data", data);
 
   const excludedEndpoints = [""];
-
-  useEffect(() => {
-    if (isSuccess && data) {
-      dispatch(setAuthenticated(data));
-    } else if (isError || !data) {
-      dispatch(setUnAuthenticated());
-    }
-  }, [isSuccess, isError, data, dispatch]);
 
   const isSomeQueryPending = useSelector(
     (state: RootState) =>
@@ -63,6 +58,22 @@ export default function App() {
   );
   console.log("isSomeQueryPending", isSomeQueryPending);
 
+  useEffect(() => {
+    if (isSuccess && data) {
+      dispatch(setAuthenticated({ userData: data }));
+    } else if (isError || (isSuccess && !data)) {
+      dispatch(setUnAuthenticated());
+    }
+  }, [isSuccess, isError, data, dispatch]);
+
+  if (isLoading && !data) {
+    return (
+      <div className="h-screen">
+        <Spinner />;
+      </div>
+    );
+  }
+
   return (
     <>
       {/* {isSomeQueryPending && <Spinner />} */}
@@ -70,13 +81,12 @@ export default function App() {
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
-          {/* Auth Layout */}
-          {/* <Route
-            path="/signin"
-            element={<SignIn isAuthenticated={isAuthenticated} />}
-          />
-          <Route path="/signup" element={<SignUp />} /> */}
-          <Route path="/auth" element={<GoogleAuth />} />
+          {/* Auth Route */}
+          {isAuthenticated ? (
+            <Route path="/auth" element={<Navigate to="/" replace />} />
+          ) : (
+            <Route path="/auth" element={<GoogleAuth />} />
+          )}
 
           {/* Dashboard Layout */}
           <Route
@@ -87,10 +97,8 @@ export default function App() {
             }
           >
             <Route index path="/" element={<Home />} />
-            {/* Others Page */}
             <Route path="/profile" element={<UserProfiles />} />
             <Route path="/calendar" element={<Calendar />} />
-            {/* <Route path="/csv/view" element={<ViewCSV />} /> */}
             <Route path="/patients" element={<PatientRecords />} />
             <Route path="/patients/gaps" element={<Gaps />} />
             <Route path="/patients/vitals" element={<Vitals />} />
@@ -98,28 +106,19 @@ export default function App() {
             <Route path="/patients/metrics" element={<Metrics />} />
             <Route path="/patients/history" element={<History />} />
             <Route path="/patients/history/:id" element={<HistoryDetail />} />
-
             <Route path="/blank" element={<Blank />} />
-
-            {/* Forms */}
             <Route path="/form-elements" element={<FormElements />} />
-
-            {/* Tables */}
-
-            {/* Ui Elements */}
             <Route path="/alerts" element={<Alerts />} />
             <Route path="/avatars" element={<Avatars />} />
             <Route path="/badge" element={<Badges />} />
             <Route path="/buttons" element={<Buttons />} />
             <Route path="/images" element={<Images />} />
             <Route path="/videos" element={<Videos />} />
-
-            {/* Charts */}
             <Route path="/line-chart" element={<LineChart />} />
             <Route path="/bar-chart" element={<BarChart />} />
           </Route>
 
-          {/* Fallback Route */}
+          {/* Fallback */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
