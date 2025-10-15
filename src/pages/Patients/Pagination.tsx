@@ -44,21 +44,24 @@ export default function Pagination({
 
   return (
     <div className="mt-4 flex items-center justify-between">
-      <div className="text-sm text-gray-500">
+      <div className="text-sm text-gray-500 dark:text-white/90">
         Showing page {currentPage} of {totalPages}
       </div>
       <div className="flex items-center gap-2">
         <button
           onClick={() => onPageChange(Math.max(1, currentPage - 1))}
           disabled={currentPage === 1}
-          className="px-3 py-1 rounded-md border border-gray-200 bg-white text-sm disabled:opacity-50"
+          className="px-3 py-1 rounded-md border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800 dark:text-white text-sm disabled:opacity-50"
         >
           Prev
         </button>
 
         {visiblePages.map((p, index) =>
           p === "..." ? (
-            <span key={`ellipsis-${index}`} className="px-2 text-gray-400">
+            <span
+              key={`ellipsis-${index}`}
+              className="px-2 text-gray-400 dark:text-white/90"
+            >
               ...
             </span>
           ) : (
@@ -68,7 +71,7 @@ export default function Pagination({
               className={`px-3 py-1 rounded-md border text-sm ${
                 p === currentPage
                   ? "bg-blue-600 text-white border-blue-600"
-                  : "bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
+                  : "bg-white text-gray-700 dark:bg-gray-800 dark:text-white/90 dark:border-gray-800 border-gray-200 hover:bg-gray-50"
               }`}
             >
               {p}
@@ -79,7 +82,7 @@ export default function Pagination({
         <button
           onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
           disabled={currentPage === totalPages}
-          className="px-3 py-1 rounded-md border border-gray-200 bg-white text-sm disabled:opacity-50"
+          className="px-3 py-1 rounded-md border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-800 dark:text-white text-sm disabled:opacity-50"
         >
           Next
         </button>

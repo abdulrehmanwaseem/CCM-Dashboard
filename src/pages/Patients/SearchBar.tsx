@@ -23,7 +23,7 @@ export default function SearchBar({
         <div className="relative">
           <button
             onClick={() => setDropdownOpen((prev) => !prev)}
-            className="flex items-center bg-gray-100 border border-gray-300 rounded-l-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-200"
+            className="flex items-center bg-gray-100 border border-gray-300 rounded-l-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:border-gray-800 dark:bg-white/[0.03] dark:text-white/90"
           >
             {searchBy}
             <svg
@@ -59,7 +59,7 @@ export default function SearchBar({
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder={`${placeholder} by ${searchBy}`}
-          className="flex-1 border border-gray-300 border-l-0 rounded-r-lg px-4 py-2 text-sm placeholder-gray-400 focus:outline-none"
+          className="flex-1 border border-gray-300 border-l-0 dark:border-gray-800 dark:text-white/90 rounded-r-lg px-4 py-2 text-sm placeholder-gray-400 focus:outline-none"
         />
 
         <div className="absolute right-3 top-[45%] -translate-y-1/2 text-gray-400 text-2xl pointer-events-none">

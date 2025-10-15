@@ -13,7 +13,7 @@ function VitalsTable({ data, isFetching }: Props) {
   const dispatch = useDispatch<AppDispatch>();
 
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-4">
+    <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4 overflow-x-auto">
       {isFetching ? (
         <div className="my-5">
           <Spinner />
@@ -21,7 +21,7 @@ function VitalsTable({ data, isFetching }: Props) {
       ) : (
         <table className="w-full text-sm">
           <thead>
-            <tr className="text-left text-xs text-gray-500">
+            <tr className="text-left text-xs text-gray-500 dark:text-white/90">
               <th className="py-3 text-sm">Patient</th>
               <th className="py-3">BP (Systolic/Diastolic)</th>
               <th className="py-3">Heart Rate</th>
@@ -35,12 +35,17 @@ function VitalsTable({ data, isFetching }: Props) {
           </thead>
           <tbody>
             {data?.map((v: Vitals) => (
-              <tr key={v.patient_id} className="border-t border-gray-100">
+              <tr
+                key={v.patient_id}
+                className="border-t border-gray-100 dark:border-gray-800 dark:text-white/80"
+              >
                 <td className="py-3">
-                  <div className="font-medium text-gray-800">
+                  <div className="font-medium text-gray-800 dark:text-white/90">
                     {v.first_name} {v.last_name}
                   </div>
-                  <div className="text-xs text-gray-500">{v.patient_id}</div>
+                  <div className="text-xs text-gray-500 dark:text-white/80">
+                    {v.patient_id}
+                  </div>
                 </td>
                 <td className="py-3">
                   {v.bp_s && v.bp_d ? `${v.bp_s}/${v.bp_d}` : "-"}
@@ -67,7 +72,7 @@ function VitalsTable({ data, isFetching }: Props) {
                         )
                       }
                       title="View details"
-                      className="inline-flex items-center justify-center h-8 w-8 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50"
+                      className="inline-flex items-center justify-center h-8 w-8 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                     >
                       <svg
                         width="16"

@@ -24,7 +24,7 @@ export default function PatientsTable({ data, isFetching }: Props) {
   const dispatch = useDispatch<AppDispatch>();
 
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-4 overflow-x-auto">
+    <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4 overflow-x-auto">
       {isFetching ? (
         <div className="my-5 h-[70vh]">
           <Spinner />
@@ -32,7 +32,7 @@ export default function PatientsTable({ data, isFetching }: Props) {
       ) : (
         <table className="w-full text-sm">
           <thead>
-            <tr className="text-left text-xs text-gray-500">
+            <tr className="text-left text-xs text-gray-500 dark:text-white/90">
               <th className="py-3">Patient</th>
               <th className="py-3">DOB</th>
               <th className="py-3">Sex</th>
@@ -44,12 +44,17 @@ export default function PatientsTable({ data, isFetching }: Props) {
           </thead>
           <tbody>
             {data.map((p: Patient) => (
-              <tr key={p.patient_id} className="border-t border-gray-100">
+              <tr
+                key={p.patient_id}
+                className="border-t border-gray-100 dark:border-gray-800 dark:text-white/80"
+              >
                 <td className="py-3">
-                  <div className="font-medium text-gray-800">
+                  <div className="font-medium text-gray-800 dark:text-white/90">
                     {p.first_name} {p.last_name}
                   </div>
-                  <div className="text-xs text-gray-500">{p.patient_id}</div>
+                  <div className="text-xs text-gray-500 dark:text-white/80">
+                    {p.patient_id}
+                  </div>
                 </td>
                 <td className="py-3">{p.dob}</td>
                 <td className="py-3">{p.sex}</td>
@@ -71,7 +76,7 @@ export default function PatientsTable({ data, isFetching }: Props) {
                         )
                       }
                       title="View details"
-                      className="inline-flex items-center justify-center h-8 w-8 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50"
+                      className="inline-flex items-center justify-center h-8 w-8 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                     >
                       <svg
                         width="16"

@@ -90,7 +90,7 @@ const Gaps = () => {
         <div className="relative mb-4">
           <button
             onClick={() => setFilterOpen((prev) => !prev)}
-            className="dropdown-toggle bg-white border rounded-md px-3 py-2 text-sm flex justify-between items-center w-[250px] max-sm:w-full"
+            className="dropdown-toggle bg-white dark:bg-white/[0.03] dark:text-white/80 dark:border-gray-800 border rounded-md px-3 py-2 text-sm flex justify-between items-center w-[250px] max-sm:w-full"
           >
             {selectedFilter ? selectedFilter : "Filter by Gap"}
             <svg
@@ -122,7 +122,7 @@ const Gaps = () => {
               <DropdownItem
                 key={filter}
                 onItemClick={() => handleFilterSelect(filter)}
-                className="px-3 py-2 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
+                className="px-3 py-2 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 dark:text-white/80 dark:hover:bg-white/5 dark:hover:text-gray-300"
               >
                 {filter}
               </DropdownItem>
@@ -131,7 +131,7 @@ const Gaps = () => {
             {selectedFilter && (
               <DropdownItem
                 onItemClick={clearFilter}
-                className="px-3 py-2 text-sm font-medium text-red-500 rounded-lg hover:bg-red-50 dark:hover:bg-white/5"
+                className="px-3 py-2 text-sm font-medium text-red-500 rounded-lg hover:bg-red-50 dark:hover:text-red-700 dark:hover:bg-white/5"
               >
                 Clear Filter
               </DropdownItem>

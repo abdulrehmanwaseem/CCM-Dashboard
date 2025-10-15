@@ -27,17 +27,17 @@ const PatientDetailsModal: React.FC = () => {
         <>
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h3 className="text-lg font-semibold text-gray-900">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white/90">
                 {basic_info?.first_name} {basic_info?.last_name}
               </h3>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-500 dark:text-white/80">
                 DOB: {basic_info?.dob} · Sex: {basic_info?.sex}
               </p>
             </div>
           </div>
           <div className="grid grid-cols-1 gap-4">
-            <div className="bg-gray-50 rounded-lg p-3 border">
-              <div className="grid grid-cols-2 gap-2 text-sm text-gray-700">
+            <div className="bg-gray-50 dark:bg-white/[0.03] rounded-lg p-3 border dark:border-gray-800">
+              <div className="grid grid-cols-2 gap-2 text-sm text-gray-700 dark:text-white/80">
                 <div>Blood Pressure:</div>
                 <div className="font-medium">
                   {basic_info?.bp_s} / {basic_info?.bp_d}
@@ -78,7 +78,7 @@ const PatientDetailsModal: React.FC = () => {
           <div className="flex gap-3 mt-4">
             <button
               onClick={handleClose}
-              className="flex-1 rounded-lg border border-gray-300 px-4 py-2 text-sm text-gray-700"
+              className="flex-1 rounded-lg border border-gray-300 dark:border-gray-800 px-4 py-2 text-sm text-gray-700 dark:text-white/70 dark:hover:bg-white/5 dark:hover:text-white"
             >
               Close
             </button>

@@ -140,7 +140,7 @@ const GoogleAuth = () => {
           onClick={handleGoogleSignIn}
           size="md"
           type="button"
-          variant="outline"
+          // variant="outline"
           className="w-[300px] h-12 font-medium flex items-center justify-center gap-2 hover:shadow-sm transition"
           disabled={!isGoogleLoaded}
         >
